@@ -1,30 +1,30 @@
 <p>cadastro-projeto works!</p>
 
-<form (ngSubmit)="submitForm()" #form="ngForm">
-    <div>
-      <label for="nomeProjeto">Nome do Projeto:</label>
-      <input type="text" id="nomeProjeto" name="nomeProjeto" required [(ngModel)]="projeto.nome" #nomeProjeto="ngModel">
-      <div *ngIf="nomeProjeto.invalid && (nomeProjeto.dirty || nomeProjeto.touched)">
-        <div *ngIf="nomeProjeto.errors?.required">Nome do projeto é obrigatório.</div>
-      </div>
+<form [formGroup]="meuFormGroup" (ngSubmit)="submitForm()" #meuFormulario="ngForm">
+  <div>
+    <label for="nomeProjeto">Nome do Projeto:</label>
+    <input type="text" id="nomeProjeto" formControlName="nomeProjeto">
+    <div *ngIf="meuFormGroup.get('nomeProjeto')?.invalid && (meuFormGroup.get('nomeProjeto')?.dirty || meuFormGroup.get('nomeProjeto')?.touched)">
+      <div *ngIf="meuFormGroup.get('nomeProjeto')?.errors?.required">Nome do projeto é obrigatório.</div>
     </div>
-    
-    <div>
-      <label for="dataValidade">Data de Validade:</label>
-      <input type="date" id="dataValidade" name="dataValidade" required [(ngModel)]="projeto.dataValidade" #dataValidade="ngModel">
-      <div *ngIf="dataValidade.invalid && (dataValidade.dirty || dataValidade.touched)">
-        <div *ngIf="dataValidade.errors?.required">Data de validade é obrigatória.</div>
-      </div>
-    </div>
-    
-    <div>
-      <label for="arquivoExcel">Arquivo Excel:</label>
-      <input type="file" id="arquivoExcel" name="arquivoExcel" (change)="handleFileInput($event)" required>
-      <div *ngIf="arquivoInvalido">
-        Arquivo inválido. Por favor, selecione um arquivo Excel.
-      </div>
-    </div>
-    
-    <button type="submit" [disabled]="form.invalid">Enviar</button>
-  </form>
+  </div>
   
+  <div>
+    <label for="dataValidade">Data de Validade:</label>
+    <input type="date" id="dataValidade" formControlName="dataValidade">
+    <div *ngIf="meuFormGroup.get('dataValidade')?.invalid && (meuFormGroup.get('dataValidade')?.dirty || meuFormGroup.get('dataValidade')?.touched)">
+      <div *ngIf="meuFormGroup.get('dataValidade')?.errors?.required">Data de validade é obrigatória.</div>
+    </div>
+  </div>
+  
+  <div>
+    <label for="arquivoExcel">Arquivo Excel:</label>
+    <input type="file" id="arquivoExcel" (change)="handleFileInput($event)" required>
+    <div *ngIf="arquivoInvalido">
+      Arquivo inválido. Por favor, selecione um arquivo Excel.
+    </div>
+  </div>
+  
+  <button type="submit" [disabled]="meuFormGroup.invalid">Enviar</button>
+</form>
+
